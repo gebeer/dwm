@@ -4,19 +4,19 @@
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const unsigned int systrayspacing = 6;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=12" };
-static const char dmenufont[]       = "monospace:size=12";
+static const char *fonts[]          = { "DejaVuSansMono Nerd Font:size=14" };
+static const char dmenufont[]       = "DejaVuSansMono Nerd Font:size=14";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
-static const char col_purple[]      = "#742BC2";
+static const char col_purple[]      = "#651680";
 static const char col1[]            = "#ffffff";
 static const char col2[]            = "#ffffff";
 static const char col3[]            = "#ffffff";
@@ -49,14 +49,17 @@ static const Rule rules[] = {
 	 */
 	/* class      		instance    title       tags mask     isfloating   monitor (-1: focused)*/
 	{ "Gimp",     		NULL,       NULL,       0,            1,           -1 },
+	{ "zoom",     		NULL,       NULL,       0,            1,           -1 },
+	{ "Blueman-manager",     		NULL,       NULL,       0,            1,           -1 },
 	{ "gsimplecal",     NULL,       NULL,       0,            1,           -1 },
 	{ "vscodium", 		NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "cursor", 		NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "firefox",  		NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "chromium", 		NULL,       NULL,       1,       	  0,           -1 },
-	{ "thunderbird", 	NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "thunderbird", 	NULL,       NULL,       1 << 2,       1,           -1 },
 	{ "brave-browser", 	NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "Alacritty", 		"yazi", 	NULL, 		1 << 7, 	  0, 			-1 },
 };
-
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
@@ -83,12 +86,14 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_purple, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-l", "10", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_purple, "-sf", col_gray4, NULL };
+static const char *roficmd[] = { "rofi", "-show", "drun", "-show-icons", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	// { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
 	{ MODKEY,             			XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
